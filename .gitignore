@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.env
+*.sqlite3
+.DS_Store
+*.log
+node_modules/
+.vscode/
+.idea/
+*.swp
+*.swo
+*.bak
+*.tmp
+.venv/
+# OSやエディタごとの一時ファイルも除外
