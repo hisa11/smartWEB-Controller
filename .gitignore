@@ -1,4 +1,5 @@
 __pycache__/
+.venv/
 *.pyc
 .env
 *.sqlite3
@@ -11,5 +12,4 @@ node_modules/
 *.swo
 *.bak
 *.tmp
-.venv/
 # OSやエディタごとの一時ファイルも除外
