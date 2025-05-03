@@ -1,0 +1,317 @@
+/* ベース設定 */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'hkkaing', sans-serif;
+    background-color: black;
+    color: white;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    touch-action: none;
+    box-sizing: border-box;
+}
+
+/* タブメニューの配置 */
+#myTab {
+    position: absolute;
+    top: 16px;
+    left: 0;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    z-index: 4000;
+}
+
+/* 画面回転警告 */
+#rotate-warning {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3000;
+    background-color: black;
+    color: white;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+}
+
+/* スプラッシュ画面 */
+#splash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 0.5s ease;
+}
+
+#splash img {
+    max-height: 35vh;
+    height: auto;
+    width: auto;
+    object-fit: contain;
+}
+
+/* フルスクリーンプロンプト */
+#fullscreen-prompt {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    background-color: black;
+    color: white;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#fullscreen-prompt button,
+#enter-fullscreen {
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+    background-color: #ffffff22;
+    color: white;
+    border: 2px solid white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#fullscreen-prompt button {
+    font-size: 1.5rem;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 10px;
+}
+
+/* メインコンテンツ */
+#main-content {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* 行のレイアウト */
+.row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ユーザーアイテム */
+.col-4 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 10px;
+    flex: 0 1 auto;
+    max-width: 33%;
+    box-sizing: border-box;
+    /* transition: transform 0.3s ease; */
+}
+
+/* ユーザー画像 */
+.user-img {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+    object-fit: cover;
+    margin-bottom: 5px;
+}
+
+/* ユーザー名 */
+.text-light {
+    font-size: 1.2rem;
+    color: white;
+}
+
+/* cursiveフォント */
+.monsieur-la-doulaise-regular {
+    font-family: "Monsieur La Doulaise", cursive;
+}
+
+/* ホバー効果 */
+.col-4:hover {
+    transform: scale(1.05);
+}
+
+/* フッター */
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 0.3rem;
+    background-color: black;
+    text-align: center;
+    z-index: 100;
+}
+
+
+/* スマホ対応（タブレット以下） */
+@media (max-width: 768px) {
+    .col-4 {
+        max-width: 33%;
+    }
+
+    .user-img {
+        max-width: 120px;
+    }
+
+    .text-light {
+        font-size: 1rem;
+    }
+}
+
+/* スマホ対応（小型スマホ） */
+@media (max-width: 480px) {
+    .col-4 {
+        max-width: 50%;
+    }
+
+    .user-img {
+        max-width: 100px;
+    }
+
+    .text-light {
+        font-size: 0.9rem;
+    }
+}
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* ラベルとスイッチの間隔を小さくする */
+    margin: 4px 0;
+}
+
+.switch-label {
+    font-size: 14px;
+    flex-shrink: 0;
+    width: 80px;
+    /* ラベル幅を固定し、間延びしないように */
+}
+
+.toggle {
+    transform: scale(0.9);
+    /* スイッチサイズを少し小さく */
+}
+
+/* 新しいトグルスイッチのスタイル */
+.switch-label {
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.toggle {
+    position: relative;
+    width: 52px;
+    height: 30px;
+    margin: 5px 0 15px 0;
+    border-radius: 50px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.toggle input[type=checkbox] {
+    display: none;
+}
+
+.toggle:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: #f45e55;
+    -webkit-transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toggle:after {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 18px;
+    height: 18px;
+    display: block;
+    border-radius: 50px;
+    border: 4px solid #fff;
+    box-shadow: 0 9px 28px -6px rgba(0, 0, 0, 0.3);
+    -webkit-transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-sizing: border-box;
+}
+
+.toggle.checked:before {
+    background: #24e89c;
+}
+
+.toggle.checked:after {
+    left: 28px;
+    width: 0px;
+    background: #fff;
+    box-shadow: 0 9px 28px -6px rgba(0, 0, 0, 0.5);
+}
+
+/* スマホサイズ対応のための調整 */
+@media (max-width: 480px) {
+    .toggle {
+        width: 46px;
+        height: 26px;
+    }
+    
+    .toggle:after {
+        top: 5px;
+        left: 5px;
+        width: 16px;
+        height: 16px;
+        border: 3px solid #fff;
+    }
+    
+    .toggle.checked:after {
+        left: 25px;
+    }
+    
+    .switch-label {
+        font-size: 12px;
+    }
+}
+
+.col-3{
+    
+}

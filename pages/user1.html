@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ユーザー1</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/user1.css">
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+</head>
+
+<body>
+    <div id="rotate-warning" style="display: none;">
+        <p>スマートフォンを横向きにしてください</p>
+    </div>
+
+    <div id="fullscreen-prompt" style="display: none;">
+        <button id="enter-fullscreen">全画面モードで開始</button>
+    </div>
+
+
+    <!-- スプラッシュ画面 -->
+    <div id="splash" class="d-flex align-items-center justify-content-center vh-100">
+        <div class="text-center">
+            <img src="/static/images/logo.png" alt="Logo" class="logo">
+        </div>
+    </div>
+
+    <!-- 本画面：ユーザー選択 -->
+    <div id="main-content" class="d-none">
+        <!-- タブメニュー -->
+        <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
+                    role="tab" aria-controls="home" aria-selected="true">ホーム
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="image-tab" data-bs-toggle="tab" data-bs-target="#image" type="button"
+                    role="tab" aria-controls="image" aria-selected="false">画像
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="timer-tab" data-bs-toggle="tab" data-bs-target="#timer" type="button"
+                    role="tab" aria-controls="timer" aria-selected="false">タイマー
+                </button>
+            </li>
+        </ul>
+
+        <!-- タブの中身 -->
+        <div class="tab-content" id="myTabContent">
+            <!-- ホームタブ -->
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="text-center">
+                    <h2>ホーム画面</h2>
+                    <p>ここはホームタブの内容です。</p>
+                </div>
+            </div>
+
+            <!-- 画像タブ -->
+            <div class="tab-pane fade" id="image" role="tabpanel" aria-labelledby="image-tab">
+                <div class="text-center">
+                    <h2>画像一覧</h2>
+                    <img src="/static/images/sample1.png" alt="サンプル画像" class="img-fluid mb-2">
+                    <img src="/static/images/sample2.png" alt="サンプル画像" class="img-fluid mb-2">
+                </div>
+            </div>
+
+            <!-- タイマータブ -->
+            <div class="tab-pane fade" id="timer" role="tabpanel" aria-labelledby="timer-tab">
+                <div class="text-center">
+                    <h2>タイマー</h2>
+                    <p id="timer-display">00:00</p>
+                    <button class="btn btn-primary" onclick="startTimer()">スタート</button>
+                    <button class="btn btn-danger" onclick="resetTimer()">リセット</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="py-1 bg-black text-center">
+        <small class="text-secondary">&copy; 2025 大阪公大高専 ろぼっと倶楽部</small>
+    </footer>
+
+    <script src="/static/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/splash.js"></script>
+
+    <!-- タイマー用スクリプト -->
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <script>
+        const socket = io('http://192.168.2.200:5000'); // サーバーのURLに合わせて変更
+
+
+        let countdownInterval;
+        let remainingTime = 180000; // 3分
+
+        function startTimer() {
+            clearInterval(countdownInterval);
+
+            const now = Date.now();
+            socket.emit('start_time', { timestamp: now });
+
+            const endTime = now + remainingTime;
+            const display = document.getElementById('timer-display');
+
+            countdownInterval = setInterval(() => {
+                const timeLeft = endTime - Date.now();
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    display.textContent = '00:00.00';
+                    return;
+                }
+
+                const minutes = String(Math.floor(timeLeft / 60000)).padStart(2, '0');
+                const seconds = String(Math.floor((timeLeft % 60000) / 1000)).padStart(2, '0');
+                const milliseconds = String(Math.floor((timeLeft % 1000) / 10)).padStart(2, '0');
+
+                display.textContent = `${minutes}:${seconds}.${milliseconds}`;
+            }, 10);
+        }
+
+        // 他のクライアントから受信したスタート時刻でタイマーを同期
+        socket.on('broadcast_start_time', (data) => {
+            const startTime = data.timestamp;
+            const endTime = startTime + remainingTime;
+            const display = document.getElementById('timer-display');
+
+            clearInterval(countdownInterval);
+            countdownInterval = setInterval(() => {
+                const timeLeft = endTime - Date.now();
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    display.textContent = '00:00.00';
+                    return;
+                }
+
+                const minutes = String(Math.floor(timeLeft / 60000)).padStart(2, '0');
+                const seconds = String(Math.floor((timeLeft % 60000) / 1000)).padStart(2, '0');
+                const milliseconds = String(Math.floor((timeLeft % 1000) / 10)).padStart(2, '0');
+
+                display.textContent = `${minutes}:${seconds}.${milliseconds}`;
+            }, 10);
+        });
+        function resetTimer() {
+            clearInterval(countdownInterval);
+            remainingTime = 180000;
+            document.getElementById('timer-display').textContent = '03:00.00';
+
+            // サーバーにリセット通知を送信
+            socket.emit('reset_timer');
+        }
+
+        // サーバーからリセット通知を受けたときの処理
+        socket.on('broadcast_reset_timer', () => {
+            clearInterval(countdownInterval);
+            remainingTime = 180000;
+            document.getElementById('timer-display').textContent = '03:00.00';
+        });
+
+    </script>
+
+
+    <script src="/static/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/splash.js"></script>
+
+</body>
+
+</html>
