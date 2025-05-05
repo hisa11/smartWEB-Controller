@@ -35,6 +35,10 @@ io.on('connection', socket => {
     // セミコロン区切り＋改行
     const outStr  = `${axesStr};${btnStr}\n`;
 
+    // ターミナルにも表示
+    console.log(`Axes: ${axesStr} | Buttons: ${btnStr}`);
+
+    // シリアルへ送信
     serial.write(outStr, err => {
       if (err) console.error('Write error:', err);
     });
