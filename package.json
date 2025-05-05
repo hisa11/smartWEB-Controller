@@ -1,0 +1,25 @@
+{
+  "name": "smartweb-controller",
+  "version": "1.0.0",
+  "description": "user1 操縦者 user2 操縦補助者 user3 管理者 uvicorn main:app --reload --host 0.0.0.0 --port 8000 --log-level debug",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hisa11/smartWEB-Controller.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hisa11/smartWEB-Controller/issues"
+  },
+  "homepage": "https://github.com/hisa11/smartWEB-Controller#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "socket.io": "^4.8.1"
+  }
+}
