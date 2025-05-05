@@ -19,5 +19,5 @@ def handle_reset_timer():
   emit('broadcast_reset_timer', broadcast=True)
   
 if __name__ == '__main__':
-  socketio.run(app, host='0.0.0.0', port=5000)
+  socketio.run(app, host='0.0.0.0', port=5001)
 

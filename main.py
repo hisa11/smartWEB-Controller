@@ -15,7 +15,7 @@ async def hello():
 # テンプレートと静的ファイルの設定
 pages = Jinja2Templates(directory="pages")
 app.mount("/static", StaticFiles(directory="static"), name="static")
-app.mount("/font", StaticFiles(directory="font"), name="font")
+# app.mount("/font", StaticFiles(directory="font"), name="font")
 
 @app.get("/")
 async def home(request: Request):

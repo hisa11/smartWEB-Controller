@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/user1.css">
     <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
-    <script src="/static/js/user2.js"></script>
+    <script src="/static/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/splash.js"></script>
+
 </head>
 
 <body>
@@ -72,8 +74,8 @@
                 <div class="text-center">
                     <h2>タイマー</h2>
                     <p id="timer-display">00:00</p>
-                    <button class="btn btn-primary" onclick="startTimer()">スタート</button>
-                    <button class="btn btn-danger" onclick="resetTimer()">リセット</button>
+                    <button id="start-timer-btn" class="btn btn-primary">スタート</button>
+                    <button id="reset-timer-btn" class="btn btn-danger">リセット</button>
                 </div>
             </div>
         </div>
@@ -87,9 +89,8 @@
     <script src="/static/js/splash.js"></script>
 
     <!-- タイマー用スクリプト -->
-    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
     <script>
-        const socket = io('http://192.168.2.200:5000'); // サーバーのURLに合わせて変更
+        const socket = io('http://192.168.2.200:5001'); // サーバーのURLに合わせて変更
 
         let countdownInterval;
         let remainingTime = 180000; // 3分
@@ -143,6 +144,7 @@
                 display.textContent = `${minutes}:${seconds}.${milliseconds}`;
             }, 10);
         });
+        
         function resetTimer() {
             clearInterval(countdownInterval);
             remainingTime = 180000;
@@ -158,12 +160,18 @@
             remainingTime = 180000;
             document.getElementById('timer-display').textContent = '03:00.00';
         });
+        
+        // DOMが読み込まれた後にイベントリスナーを設定
+        document.addEventListener('DOMContentLoaded', function() {
+            // スタートボタンにイベントリスナーを追加
+            document.getElementById('start-timer-btn').addEventListener('click', startTimer);
+            // リセットボタンにイベントリスナーを追加
+            document.getElementById('reset-timer-btn').addEventListener('click', resetTimer);
+        });
 
+        // グローバルスコープへの公開は不要になったため削除
     </script>
 
-
-    <script src="/static/js/bootstrap.bundle.min.js"></script>
-    <script src="/static/js/splash.js"></script>
 
 </body>
 
