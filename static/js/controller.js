@@ -2,7 +2,7 @@
 // クライアント側の PS4 コントローラー入力取得・サーバー送信スクリプト
 
 // Socket.IO クライアントと接続（HTML 側で読み込まれていると想定）
-const socket = io('http://192.168.0.7:5000');
+const socket = io('http://192.168.8.212:5000');
 
 let gamepadIndex = null;    // 接続中のゲームパッド index
 let pollInterval = null;    // ポーリング用 interval ID

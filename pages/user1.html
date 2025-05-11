@@ -6,7 +6,7 @@
     <title>ユーザー1</title>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/user1.css">
-    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <script src="/static/js/socket.io.min.js"></script>
     <script src="/static/js/controller.js"></script>
 </head>
 
@@ -55,6 +55,7 @@
                 <div class="text-center">
                     <h2>ホーム画面</h2>
                     <p>ここはホームタブの内容です。</p>
+                    <button id="sendButton">そうしん</button>
                 </div>
             </div>
 
@@ -85,10 +86,23 @@
 
     <script src="/static/js/bootstrap.bundle.min.js"></script>
     <script src="/static/js/splash.js"></script>
-
+    <script>
+        document.getElementById("sendButton").addEventListener("click", () => {
+            fetch("http://localhost:3000/button-clicked", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: "ボタンが押されました" })
+            })
+            .then(response => response.text())
+            .then(data => console.log("サーバーからの応答:", data))
+            .catch(error => console.error("エラー:", error));
+        });
+    </script>
     <!-- タイマー用スクリプト -->
     <script>
-        const socket = io('http://192.168.2.200:5001'); // サーバーのURLに合わせて変更
+        const timer_socket = io('http://192.168.2.200:5001'); // サーバーのURLに合わせて変更
 
 
         let countdownInterval;
@@ -98,7 +112,7 @@
             clearInterval(countdownInterval);
 
             const now = Date.now();
-            socket.emit('start_time', { timestamp: now });
+            timer_socket.emit('start_time', { timestamp: now });
 
             const endTime = now + remainingTime;
             const display = document.getElementById('timer-display');
@@ -121,7 +135,7 @@
         }
 
         // 他のクライアントから受信したスタート時刻でタイマーを同期
-        socket.on('broadcast_start_time', (data) => {
+        timer_socket.on('broadcast_start_time', (data) => {
             const startTime = data.timestamp;
             const endTime = startTime + remainingTime;
             const display = document.getElementById('timer-display');
@@ -149,11 +163,11 @@
             document.getElementById('timer-display').textContent = '03:00.00';
 
             // サーバーにリセット通知を送信
-            socket.emit('reset_timer');
+            timer_socket.emit('reset_timer');
         }
 
         // サーバーからリセット通知を受けたときの処理
-        socket.on('broadcast_reset_timer', () => {
+        timer_socket.on('broadcast_reset_timer', () => {
             clearInterval(countdownInterval);
             remainingTime = 180000;
             document.getElementById('timer-display').textContent = '03:00.00';
