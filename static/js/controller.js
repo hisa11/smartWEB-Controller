@@ -2,7 +2,7 @@
 // クライアント側の PS4 コントローラー入力取得・サーバー送信スクリプト
 
 // Socket.IO クライアントと接続（HTML 側で読み込まれていると想定）
-const socket = io('http://192.168.8.212:5000');
+const socket = io('http://192.168.2.200:5000');
 
 let gamepadIndex = null;    // 接続中のゲームパッド index
 let pollInterval = null;    // ポーリング用 interval ID
@@ -61,5 +61,29 @@ window.addEventListener('load', () => {
             startPolling();
             break;
         }
+    }
+});
+
+window.addEventListener('DOMContentLoaded', function() {
+    var sw = document.getElementById('toggle1');
+    if (sw) {
+        sw.addEventListener('change', function () {
+            if (this.checked) {
+                socket.emit('switchOn');
+                console.log('スイッチオンを送信しました');
+            }
+        });
+    }
+});
+
+window.addEventListener('DOMContentLoaded', function() {
+    var sw = document.getElementById('toggle2');
+    if (sw) {
+        sw.addEventListener('change', function () {
+            if (this.checked) {
+                socket.emit('switchOn');
+                console.log('スイッチオンを送信しました');
+            }
+        });
     }
 });

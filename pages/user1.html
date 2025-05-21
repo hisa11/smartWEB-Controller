@@ -52,11 +52,18 @@
         <div class="tab-content" id="myTabContent">
             <!-- ホームタブ -->
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <div class="text-center">
-                    <h2>ホーム画面</h2>
-                    <p>ここはホームタブの内容です。</p>
-                    <button id="sendButton">そうしん</button>
+                <div class="toggle_button">
+                    <input id="toggle1" class="toggle_input" type="checkbox" />
+                    <label for="toggle1" class="toggle_label"></label>
+                    <label for="toggle1" class="visually-hidden">トグル1</label>
                 </div>
+
+                <div class="toggle_button">
+                    <input id="toggle2" class="toggle_input" type="checkbox" />
+                    <label for="toggle2" class="toggle_label"></label>
+                    <label for="toggle2" class="visually-hidden">トグル2</label>
+                </div>
+
             </div>
 
             <!-- 画像タブ -->
@@ -86,20 +93,7 @@
 
     <script src="/static/js/bootstrap.bundle.min.js"></script>
     <script src="/static/js/splash.js"></script>
-    <script>
-        document.getElementById("sendButton").addEventListener("click", () => {
-            fetch("http://localhost:3000/button-clicked", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ message: "ボタンが押されました" })
-            })
-            .then(response => response.text())
-            .then(data => console.log("サーバーからの応答:", data))
-            .catch(error => console.error("エラー:", error));
-        });
-    </script>
+
     <!-- タイマー用スクリプト -->
     <script>
         const timer_socket = io('http://192.168.2.200:5001'); // サーバーのURLに合わせて変更

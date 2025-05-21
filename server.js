@@ -33,7 +33,9 @@ async function main() {
   // 5) Socket.IO → ROS2 + シリアル
   io.on('connection', socket => {
     console.log(`Client connected: ${socket.id}`);
-
+    socket.on('switchOn',() => {
+      console.log('Switch on')
+    });
     socket.on('controller_status', data => {
       // rosbridge に publish
       const joyMsg = new ROSLIB.Message({

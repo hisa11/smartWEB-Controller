@@ -57,6 +57,7 @@
                 <div class="text-center">
                     <h2>ホーム画面</h2>
                     <p>ここはホームタブの内容です。</p>
+
                 </div>
             </div>
 
@@ -144,7 +145,7 @@
                 display.textContent = `${minutes}:${seconds}.${milliseconds}`;
             }, 10);
         });
-        
+
         function resetTimer() {
             clearInterval(countdownInterval);
             remainingTime = 180000;
@@ -160,9 +161,9 @@
             remainingTime = 180000;
             document.getElementById('timer-display').textContent = '03:00.00';
         });
-        
+
         // DOMが読み込まれた後にイベントリスナーを設定
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // スタートボタンにイベントリスナーを追加
             document.getElementById('start-timer-btn').addEventListener('click', startTimer);
             // リセットボタンにイベントリスナーを追加

@@ -1,5 +1,6 @@
 /* ベース設定 */
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     font-family: 'hkkaing', sans-serif;
@@ -161,6 +162,61 @@ html, body {
 .col-4:hover {
     transform: scale(1.05);
 }
+
+.toggle_button {
+    position: relative;
+    margin: 16px auto; /* 上下マージン＋中央寄せ */
+    width: 100px;       /* ラベルと同じサイズに */
+    height: 85px;
+}
+
+/* 入力はラベルの裏に隠れている状態 */
+.toggle_input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* ラベルデザイン */
+.toggle_label {
+    width: 100%;
+    height: 100%;
+    background: #ccc;
+    position: relative;
+    display: inline-block;
+    transition: 0.4s;
+    box-sizing: border-box;
+    text-align: center;
+    line-height: 85px;
+}
+
+/* ラベル内のテキスト */
+.toggle_label:after {
+    content: "低速";
+    position: absolute;
+    font-size: 20px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    color: #000000;
+    transition: 0.4s;
+}
+
+/* チェック時の色・テキスト */
+.toggle_input:checked + .toggle_label {
+    background-color: #4BD865;
+}
+
+.toggle_input:checked + .toggle_label:after {
+    content: "高速";
+}
+
 
 /* フッター */
 footer {
