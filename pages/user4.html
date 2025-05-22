@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ユーザー3</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/user3.css">
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <!-- jQuery追加 -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="/static/js/user3.js"> </script>
+</head>
+
+<body>
+    <div id="rotate-warning" style="display: none;">
+        <p>スマートフォンを横向きにしてください</p>
+    </div>
+
+    <div id="fullscreen-prompt" style="display: none;">
+        <button id="enter-fullscreen">全画面モードで開始</button>
+    </div>
+
+
+    <!-- スプラッシュ画面 -->
+    <div id="splash" class="d-flex align-items-center justify-content-center vh-100">
+        <div class="text-center">
+            <img src="/static/images/logo.png" alt="Logo" class="logo">
+        </div>
+    </div>
+
+    <!-- 本画面：ユーザー選択 -->
+    <div id="main-content" class="d-none">
+        <!-- タブメニュー -->
+        <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
+                    role="tab" aria-controls="home" aria-selected="true">ホーム
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="image-tab" data-bs-toggle="tab" data-bs-target="#image" type="button"
+                    role="tab" aria-controls="image" aria-selected="false">画像
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="timer-tab" data-bs-toggle="tab" data-bs-target="#timer" type="button"
+                    role="tab" aria-controls="timer" aria-selected="false">タイマー
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="ntwwork-tab" data-bs-toggle="tab" data-bs-target="#network" type="button"
+                    role="tab" aria-controls="network" aria-selected="false">ネットワーク
+                </button>
+            </li>
+        </ul>
+
+        <!-- タブの中身 -->
+        <div class="tab-content" id="myTabContent">
+            <!-- ホームタブ -->
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="text-center">
+                    <h2>ホーム画面</h2>
+                    <p>ここはホームタブの内容です。</p>
+                </div>
+            </div>
+
+            <!-- 画像タブ -->
+            <div class="tab-pane fade" id="image" role="tabpanel" aria-labelledby="image-tab">
+                <div class="text-center">
+                    <div class="container-fluid mt-4 ps-2">
+                        <div class="row g-0 justify-content-start">
+                            <div class="col-3">
+                                <div class="switch-label">B1</div>
+                                <div class="toggle" id="toggle1">
+                                    <input type="checkbox" name="check1" />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="switch-label">B2</div>
+                                <div class="toggle" id="toggle2">
+                                    <input type="checkbox" name="check2" />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="switch-label">B3</div>
+                                <div class="toggle" id="toggle3">
+                                    <input type="checkbox" name="check3" />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="switch-label">C1</div>
+                                <div class="toggle" id="toggle4">
+                                    <input type="checkbox" name="check4" />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="switch-label">C2</div>
+                                <div class="toggle" id="toggle5">
+                                    <input type="checkbox" name="check5" />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="switch-label">C3</div>
+                                <div class="toggle" id="toggle6">
+                                    <input type="checkbox" name="check6" />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="switch-label">D1</div>
+                                <div class="toggle" id="toggle7">
+                                    <input type="checkbox" name="check7" />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="switch-label">D2</div>
+                                <div class="toggle" id="toggle8">
+                                    <input type="checkbox" name="check8" />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="switch-label">D3</div>
+                                <div class="toggle" id="toggle9">
+                                    <input type="checkbox" name="check9" />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="switch-label">E1</div>
+                                <div class="toggle" id="toggle10">
+                                    <input type="checkbox" name="check10" />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="switch-label">E2</div>
+                                <div class="toggle" id="toggle11">
+                                    <input type="checkbox" name="check11" />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="switch-label">E3</div>
+                                <div class="toggle" id="toggle12">
+                                    <input type="checkbox" name="check12" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- タイマータブ -->
+            <div class="tab-pane fade" id="timer" role="tabpanel" aria-labelledby="timer-tab">
+                <div class="text-center">
+                    <h2>タイマー</h2>
+                    <p id="timer-display">00:00</p>
+                    <button class="btn btn-primary" onclick="startTimer()">スタート</button>
+                    <button class="btn btn-danger" onclick="resetTimer()">リセット</button>
+                </div>
+            </div>
+            <!-- ネットワークタブ -->
+            <div class="tab-pane fade" id="network" role="tabpanel" aria-labelledby="network-tab">
+                <div class="text-center">
+                    <button id="network-button"  type="button">クリック！</button>
+                </div>
+            </div>
+        </div>
+
+        <footer class="py-1 bg-black text-center">
+            <small class="text-secondary">&copy; 2025 大阪公大高専 ろぼっと倶楽部</small>
+        </footer>
+
+        <script src="/static/js/bootstrap.bundle.min.js"></script>
+        <script src="/static/js/splash.js"></script>
+
+        <!-- タイマー用スクリプト -->
+        <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+        <script>
+            const socket = io('http://192.168.2.200:5001'); // サーバーのURLに合わせて変更
+
+            let countdownInterval;
+            let remainingTime = 180000; // 3分
+
+            function startTimer() {
+                clearInterval(countdownInterval);
+
+                const now = Date.now();
+                socket.emit('start_time', { timestamp: now });
+
+                const endTime = now + remainingTime;
+                const display = document.getElementById('timer-display');
+
+                countdownInterval = setInterval(() => {
+                    const timeLeft = endTime - Date.now();
+
+                    if (timeLeft <= 0) {
+                        clearInterval(countdownInterval);
+                        display.textContent = '00:00.00';
+                        return;
+                    }
+
+                    const minutes = String(Math.floor(timeLeft / 60000)).padStart(2, '0');
+                    const seconds = String(Math.floor((timeLeft % 60000) / 1000)).padStart(2, '0');
+                    const milliseconds = String(Math.floor((timeLeft % 1000) / 10)).padStart(2, '0');
+
+                    display.textContent = `${minutes}:${seconds}.${milliseconds}`;
+                }, 10);
+            }
+
+            // 他のクライアントから受信したスタート時刻でタイマーを同期
+            socket.on('broadcast_start_time', (data) => {
+                const startTime = data.timestamp;
+                const endTime = startTime + remainingTime;
+                const display = document.getElementById('timer-display');
+
+                clearInterval(countdownInterval);
+                countdownInterval = setInterval(() => {
+                    const timeLeft = endTime - Date.now();
+
+                    if (timeLeft <= 0) {
+                        clearInterval(countdownInterval);
+                        display.textContent = '00:00.00';
+                        return;
+                    }
+
+                    const minutes = String(Math.floor(timeLeft / 60000)).padStart(2, '0');
+                    const seconds = String(Math.floor((timeLeft % 60000) / 1000)).padStart(2, '0');
+                    const milliseconds = String(Math.floor((timeLeft % 1000) / 10)).padStart(2, '0');
+
+                    display.textContent = `${minutes}:${seconds}.${milliseconds}`;
+                }, 10);
+            });
+            function resetTimer() {
+                clearInterval(countdownInterval);
+                remainingTime = 180000;
+                document.getElementById('timer-display').textContent = '03:00.00';
+
+                // サーバーにリセット通知を送信
+                socket.emit('reset_timer');
+            }
+
+            // サーバーからリセット通知を受けたときの処理
+            socket.on('broadcast_reset_timer', () => {
+                clearInterval(countdownInterval);
+                remainingTime = 180000;
+                document.getElementById('timer-display').textContent = '03:00.00';
+            });
+
+        </script>
+
+        <!-- トグルスイッチ用のスクリプト -->
+        <script>
+            $(document).ready(function () {
+                // 各トグルスイッチにイベントを設定
+                $(".toggle").on("click", function () {
+                    $(this).toggleClass("checked");
+                    var input = $(this).find('input[type="checkbox"]');
+
+                    if (!input.prop("checked")) {
+                        input.prop("checked", true);
+                    } else {
+                        input.prop("checked", false);
+                    }
+
+                    // スイッチの状態をコンソールに出力（デバッグ用）
+                    console.log($(this).attr('id') + " is " + (input.prop("checked") ? "ON" : "OFF"));
+                });
+            });
+        </script>
+
+        <script src="/static/js/bootstrap.bundle.min.js"></script>
+        <script src="/static/js/splash.js"></script>
+
+</body>
+
+</html>
