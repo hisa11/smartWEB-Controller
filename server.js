@@ -53,6 +53,12 @@ async function main() {
       console.log(`→ /joy published, axes=[${joyMsg.axes}], buttons=[${joyMsg.buttons}]`);
     });
 
+    // ネットワーク遅延計測用
+    socket.on('network_ping', (data) => {
+        // 受信したら即返信
+        socket.emit('network_pong', { timestamp: Date.now() });
+    });
+
     socket.on('disconnect', () => {
       console.log(`Client disconnected: ${socket.id}`);
     });

@@ -124,6 +124,12 @@ body {
     box-sizing: border-box;
 }
 
+.row.g-0.justify-content-start {
+    height: 80%;
+    width: 40%; /* 横幅を80%に縮小 */
+    margin-left: 0; /* 左寄せ */
+}
+
 /* ユーザーアイテム */
 .col-4 {
     display: flex;

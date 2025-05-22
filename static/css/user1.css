@@ -188,24 +188,25 @@ body {
     height: 100%;
     background: #ccc;
     position: relative;
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: 0.4s;
     box-sizing: border-box;
     text-align: center;
-    line-height: 85px;
 }
 
 /* ラベル内のテキスト */
 .toggle_label:after {
-    content: "低速";
-    position: absolute;
+    content: "低速中";
     font-size: 20px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
     color: #000000;
     transition: 0.4s;
+    position: static;
+    transform: none;
+    left: auto;
+    top: auto;
+    z-index: 1;
 }
 
 /* チェック時の色・テキスト */
@@ -214,7 +215,7 @@ body {
 }
 
 .toggle_input:checked + .toggle_label:after {
-    content: "高速";
+    content: "高速中";
 }
 
 
